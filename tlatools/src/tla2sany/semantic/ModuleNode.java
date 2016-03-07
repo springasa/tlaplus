@@ -1155,21 +1155,22 @@ final void addAssumption(TreeNode stn, ExprNode ass, SymbolTable st,
 
     SemanticNode[] nodes = null;
     // constants
-    Element constants = doc.createElement("constants");
+    //Element constants = doc.createElement("constants");
     nodes = getConstantDecls();
     for (int i=0; i<nodes.length; i++) {
-      constants.appendChild(nodes[i].export(doc,context));
+      ret.appendChild(nodes[i].export(doc,context));
     }
-    ret.appendChild(constants);
+    //ret.appendChild(constants);
 
     // variables
-    Element variables = doc.createElement("variables");
+    //Element variables = doc.createElement("variables");
     nodes = getVariableDecls();
     for (int i=0; i<nodes.length; i++) {
-      variables.appendChild(nodes[i].export(doc,context));
+      ret.appendChild(nodes[i].export(doc,context));
     }
-    ret.appendChild(variables);
+    //ret.appendChild(variables);
 
+    /*
     //operators
     Element operators = doc.createElement("definitions");
     nodes = getOpDefs();
@@ -1193,6 +1194,12 @@ final void addAssumption(TreeNode stn, ExprNode ass, SymbolTable st,
       thms.appendChild(nodes[i].export(doc,context));
     }
     ret.appendChild(thms);
+  */
+
+    nodes = getTopLevel();
+    for (int i=0; i<nodes.length; i++) {
+      ret.appendChild(nodes[i].export(doc,context));
+    }
 
     return ret;
   }
