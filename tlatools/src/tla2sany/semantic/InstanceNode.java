@@ -449,7 +449,7 @@ public class InstanceNode extends LevelNode {
       }
 
       Element ret = doc.createElement("InstanceNode");
-      ret.appendChild(appendText(doc,"uniquename",name.toString()));
+      ret.appendChild(appendText(doc,"uniquename",name == null ? "(none)" : name.toString()));
       ret.appendChild(sbts);
       ret.appendChild(prms);
       return ret;
