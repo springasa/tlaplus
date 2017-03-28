@@ -658,8 +658,11 @@ public class ThmOrAssumpDefNode extends SymbolNode
       //actually it does: the name is not known in a theorem
       /*TODO: for now we just return an invalid element if thmOrAssump is null. if there are some valid calls with null after
               bug-fixing, change the Dummy solution */
-    if (thmOrAssump != null) return thmOrAssump.getLevelElement(doc,context);
-    if (body != null) return body.getLevelElement(doc, context);
+//    if (thmOrAssump != null) return thmOrAssump.getLevelElement(doc,context);
+//    if (body != null) return body.getLevelElement(doc, context);
+
+    if (thmOrAssump != null) return thmOrAssump.export(doc,context);
+    if (body != null) return body.export(doc, context);
 
     return doc.createElement("DummyThmOrAssumpDefNode"); //if the body element is null, export something invalid
   }

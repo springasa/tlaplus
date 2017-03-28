@@ -165,7 +165,8 @@ public class XMLExporter {
       //rootElement.appendChild(e);
       ModuleNode[] externalModules = table.getModuleNodes();
       for (int j = 0; j < externalModules.length; j++) {
-        Element ext_e = externalModules[j].exportDefinition(doc, context);
+        //Element ext_e = externalModules[j].exportDefinition(doc, context);
+        Element ext_e = externalModules[j].export(doc, context);
         rootElement.appendChild(ext_e);
       }
 
@@ -208,6 +209,7 @@ public class XMLExporter {
     } catch (SAXException se) {
       throw new XMLExportingException("failed to validate XML", se);
     }
+
   }
 
   static void insertRootName(Document doc, Element rootElement, SpecObj spec) {
