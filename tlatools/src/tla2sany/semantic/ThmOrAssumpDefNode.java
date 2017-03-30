@@ -666,4 +666,29 @@ public class ThmOrAssumpDefNode extends SymbolNode
 
     return doc.createElement("DummyThmOrAssumpDefNode"); //if the body element is null, export something invalid
   }
+
+  public Element export(Document doc, tla2sany.xml.SymbolContext context) {
+    if (theorem && (thmOrAssump != null)) {
+      assert(thmOrAssump instanceof TheoremNode);
+      TheoremNode nd = (TheoremNode) thmOrAssump;
+      return nd.export(doc, context);
+    }
+    if (theorem && (body != null)) {
+      assert(body instanceof TheoremNode);
+      TheoremNode nd = (TheoremNode) body;
+      return nd.export(doc, context);
+    }
+    if ((!theorem) && (thmOrAssump != null)) {
+      assert(thmOrAssump instanceof  AssumeNode);
+      AssumeNode nd = (AssumeNode) thmOrAssump;
+      return nd.export(doc, context);
+    }
+    if ((!theorem) && (body != null)) {
+      assert(body instanceof  AssumeNode);
+      AssumeNode nd = (AssumeNode) body;
+      return nd.export(doc, context);
+    }
+    return doc.createElement("DummyThmOrAssumDefNode"); //if body and thmOrAssump are null, handle the error in the pm
+  }
+
 }

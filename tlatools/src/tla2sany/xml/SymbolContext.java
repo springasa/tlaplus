@@ -2,6 +2,7 @@ package tla2sany.xml;
 
 import tla2sany.semantic.SymbolNode;
 import tla2sany.semantic.TheoremNode;
+import tla2sany.semantic.AssumeNode;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -61,6 +62,16 @@ public class SymbolContext {
   }
 
   public void put(TheoremNode nd, Document doc) {
+    Integer k = new Integer(nd.myUID);
+    if (!keys.contains(k)) {
+      // first add the key as it might be mentioned again inside the definition
+      keys.add(k);
+      setTop_level_entry();
+      context.put(k,nd.exportDefinition(doc,this));
+    }
+  }
+
+  public void put(AssumeNode nd, Document doc) {
     Integer k = new Integer(nd.myUID);
     if (!keys.contains(k)) {
       // first add the key as it might be mentioned again inside the definition

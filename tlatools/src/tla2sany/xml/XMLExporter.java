@@ -141,6 +141,7 @@ public class XMLExporter {
       }
     } else {
       ToolIO.out.println("Cannot find the specified file " + tla_name + ".");
+      return;
     }
 
 
