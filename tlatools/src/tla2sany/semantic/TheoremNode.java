@@ -21,6 +21,7 @@ import util.UniqueString;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 /**
  * This class represents a theorem
@@ -70,6 +71,10 @@ public class TheoremNode extends LevelNode {
     this.def = opd;
     this.proof = pf;
     if (opd != null) opd.thmOrAssump = this;
+
+    // make sure that definition and statemtent agree
+    if (def != null)
+      assert(def.getBody() == theoremExprOrAssumeProve);
   }
 
   /* Returns the statement of the theorem  */
@@ -380,9 +385,11 @@ public final boolean levelCheck(int iter) {
   /* MR: This is the same as SymbolNode.exportDefinition. Exports the actual theorem content, not only a reference.
    */
   public Element exportDefinition(Document doc, tla2sany.xml.SymbolContext context) {
+    //makes sure that the we are creating an entry in the database
     if (!context.isTop_level_entry())
       throw new IllegalArgumentException("Exporting theorem ref "+getNodeRef()+" twice!");
     context.resetTop_level_entry();
+
     try {
       Element e = getLevelElement(doc, context);
       // level
@@ -413,13 +420,17 @@ public final boolean levelCheck(int iter) {
 
   protected Element getLevelElement(Document doc, tla2sany.xml.SymbolContext context) {
     Element e = doc.createElement("TheoremNode");
-    //e.appendChild(appendText(doc,"uniquename",getName().toString()));
-    if (getDef() != null) {
-      //if there is a definition, export its name too
-      e.appendChild(appendText(doc, "uniquename",getDef().getName().toString()));
-    }
 
-    e.appendChild(getTheorem().export(doc,context));
+    //the theorem name is now contained in the definition, if it exists
+    Node n = doc.createElement("body");
+    if (def != null) {
+      //if there is a definition, export it too
+      n.appendChild(def.export(doc, context));
+    } else {
+      n.appendChild(getTheorem().export(doc,context));
+    }
+    e.appendChild( n );
+
     if (getProof() != null)  e.appendChild(getProof().export(doc,context));
     if (isSuffices()) e.appendChild(doc.createElement("suffices"));
     return e;

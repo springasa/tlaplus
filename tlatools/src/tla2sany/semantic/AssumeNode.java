@@ -12,6 +12,7 @@ import tla2sany.xml.XMLExportable;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 /**
  * This class represents an assumption about the constants in a module.
@@ -227,7 +228,15 @@ public AssumeNode(TreeNode stn, ExprNode expr, ModuleNode mn,
 
   protected Element getLevelElement(Document doc, tla2sany.xml.SymbolContext context) {
     Element e = doc.createElement("AssumeNode");
-    e.appendChild(getAssume().export(doc,context));
+    Node n = doc.createElement("body");
+    if (getDef() != null) {
+      //if this is also a definition, export the definition
+      n.appendChild(getDef().export(doc, context));
+    } else {
+      //otherwise export the assumption expression directly
+      n.appendChild(getAssume().export(doc,context));
+    }
+    e.appendChild(n);
     return e;
   }
 
