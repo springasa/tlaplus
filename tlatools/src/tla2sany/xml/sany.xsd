@@ -224,7 +224,10 @@
         </xs:element>
         <xs:element name="body">
           <xs:complexType>
-            <xs:group ref="AssumeProveLike"/>
+            <xs:choice>
+              <xs:group ref="ExprNode"/>
+              <xs:group ref="AssumeProveLike"/>
+            </xs:choice>
           </xs:complexType>
         </xs:element>
       </xs:sequence>
@@ -268,7 +271,7 @@
         <xs:element name="substs">
           <xs:complexType>
             <xs:sequence>
-              <xs:element maxOccurs="unbounded" ref="Subst"/>
+              <xs:element minOccurs="0" maxOccurs="unbounded" ref="Subst"/>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -613,8 +616,8 @@
             <xs:choice minOccurs="0" maxOccurs="unbounded">
               <xs:element ref="UserDefinedOpKindRef"/>
               <xs:element ref="ModuleInstanceKindRef"/>
-              <xs:element ref="TheoremNodeRef"/>
-              <xs:element ref="AssumeNodeRef"/>
+              <xs:element ref="TheoremDefRef"/>
+              <xs:element ref="AssumeDefRef"/>
             </xs:choice>
           </xs:complexType>
         </xs:element>
