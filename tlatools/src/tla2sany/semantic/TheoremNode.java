@@ -425,10 +425,13 @@ public final boolean levelCheck(int iter) {
     Node n = doc.createElement("body");
     if (def != null) {
       //if there is a definition, export it too
-      n.appendChild(def.export(doc, context));
-    } else {
-      n.appendChild(getTheorem().export(doc,context));
+      Node d = doc.createElement("definition");
+      d.appendChild(def.export(doc, context));
+      e.appendChild(d);
+      assert( def.getBody() == getTheorem() ); //make sure theorem and definition body agree before export
     }
+
+    n.appendChild(getTheorem().export(doc,context));
     e.appendChild( n );
 
     if (getProof() != null)  e.appendChild(getProof().export(doc,context));

@@ -228,14 +228,15 @@ public AssumeNode(TreeNode stn, ExprNode expr, ModuleNode mn,
 
   protected Element getLevelElement(Document doc, tla2sany.xml.SymbolContext context) {
     Element e = doc.createElement("AssumeNode");
-    Node n = doc.createElement("body");
-    if (getDef() != null) {
-      //if this is also a definition, export the definition
-      n.appendChild(getDef().export(doc, context));
-    } else {
-      //otherwise export the assumption expression directly
-      n.appendChild(getAssume().export(doc,context));
+    if (def != null) {
+      //if there is a definition, export it too
+      Node d = doc.createElement("definition");
+      d.appendChild(def.export(doc, context));
+      e.appendChild(d);
+      assert( def.getBody() == this.assumeExpr ); //make sure theorem and definition body agree before export
     }
+    Node n = doc.createElement("body");
+    n.appendChild(getAssume().export(doc,context));
     e.appendChild(n);
     return e;
   }
