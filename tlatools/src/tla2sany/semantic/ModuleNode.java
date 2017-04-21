@@ -1170,15 +1170,15 @@ final void addAssumption(TreeNode stn, ExprNode ass, SymbolTable st,
     }
     //ret.appendChild(variables);
 
-    /*
     //operators
-    Element operators = doc.createElement("definitions");
+    //Element operators = doc.createElement("definitions");
     nodes = getOpDefs();
     for (int i=0; i<nodes.length; i++) {
-      operators.appendChild(nodes[i].export(doc,context)); //was with true to expand operators
+      ret.appendChild(nodes[i].export(doc,context)); //was with true to expand operators
     }
-    ret.appendChild(operators);
+    //ret.appendChild(operators);
 
+    /*
     //assumptions
     Element assums = doc.createElement("assumptions");
     nodes = getAssumptions();
